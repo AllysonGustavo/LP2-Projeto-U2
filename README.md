@@ -1,4 +1,4 @@
-# APOO-Trabalho-1
+# LP2-Projeto-U2
 Trabalho desenvolvido por: Allyson Gustavo Silva do Carmo
 Turma: DIM0116 - LINGUAGEM DE PROGRAMAÇÃO II - T02 (2023.1)
 
