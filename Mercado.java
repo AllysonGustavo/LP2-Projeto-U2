@@ -85,13 +85,12 @@ class Estoque {
       ItemEstoque item = itens.get(i);
       System.out.println((i + 1) + ". " + item.getNome() + " - Quantidade: " + ((Produto) item).getQuantidade());
     }
-  
+
     System.out.println("Pressione qualquer tecla para continuar...");
     Scanner scanner = new Scanner(System.in);
     scanner.nextLine();
     Mercado.limparConsole();
   }
-
 
   public ItemEstoque getItem(int indice) {
     return itens.get(indice);
@@ -111,7 +110,6 @@ class Estoque {
   }
 }
 
-
 public class Mercado {
   public static void main(String[] args) {
     Estoque estoque = new Estoque();
@@ -120,7 +118,7 @@ public class Mercado {
     ProdutoVendavel arrozBrancoCamil = new ProdutoVendavel("Arroz Branco Camil", 5.99, 11);
     ProdutoVendavel feijao = new ProdutoVendavel("Feijão", 3.99, 13);
     ProdutoVendavel sabaoEmPo = new ProdutoVendavel("Sabão em pó", 9.99, 18);
-    
+
     estoque.adicionarItem(extintor);
     estoque.adicionarItem(arrozBrancoCamil);
     estoque.adicionarItem(feijao);
@@ -129,7 +127,7 @@ public class Mercado {
     Scanner scanner = new Scanner(System.in);
     int opcao;
     boolean encerrarPrograma = false;
-    List < ItemEstoque > carrinho = new ArrayList < > ();
+    List<ItemEstoque> carrinho = new ArrayList<>();
 
     while (!encerrarPrograma) {
       exibirMenuPrincipal();
@@ -140,56 +138,56 @@ public class Mercado {
       limparConsole();
 
       switch (opcao) {
-      case 1:
-        estoque.exibirItens();
-        break;
-      case 2:
-        comprarItens(scanner, estoque, carrinho);
-        break;
-      case 3:
-        exibirCarrinho(carrinho);
-        removerItemCarrinho(scanner, carrinho);
-        break;
-      case 4:
-        exibirCarrinho(carrinho);
-        encerrarPrograma = encerrarCompra(scanner);
-        break;
-      case 5:
-        exibirSobre();
-        break;
-      default:
-        System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
-        break;
+        case 1:
+          estoque.exibirItens();
+          break;
+        case 2:
+          comprarItens(scanner, estoque, carrinho);
+          break;
+        case 3:
+          exibirCarrinho(carrinho);
+          removerItemCarrinho(scanner, carrinho);
+          break;
+        case 4:
+          exibirCarrinho(carrinho);
+          encerrarPrograma = encerrarCompra(scanner);
+          break;
+        case 5:
+          exibirSobre();
+          break;
+        default:
+          System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
+          break;
       }
     }
   }
 
   public static void removerItemCarrinho(Scanner scanner, List<ItemEstoque> carrinho) {
-      System.out.println("--- Remover Item do Carrinho ---");
-      if (carrinho.isEmpty()) {
-        System.out.println("Pressione qualquer tecla para continuar...");
-        Scanner scannerr = new Scanner(System.in);
-        scannerr.nextLine();
-      } else {
-          for (int i = 0; i < carrinho.size(); i++) {
-              ItemEstoque item = carrinho.get(i);
-              System.out.println((i + 1) + ". " + item.getNome());
-          }
-          System.out.println("");
-          System.out.println("0. Voltar ao menu principal");
-          System.out.println("Selecione o número do item para remover:");
-          int opcao = scanner.nextInt();
-          scanner.nextLine();
-          if (opcao >= 1 && opcao <= carrinho.size()) {
-              ItemEstoque itemRemovido = carrinho.remove(opcao - 1);
-              System.out.println(itemRemovido.getNome() + " removido do carrinho.");
-          } else if (opcao == 0) {
-              System.out.println("Nenhum item foi removido do carrinho.");
-          } else {
-              System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
-          }
+    System.out.println("--- Remover Item do Carrinho ---");
+    if (carrinho.isEmpty()) {
+      System.out.println("Pressione qualquer tecla para continuar...");
+      Scanner scannerr = new Scanner(System.in);
+      scannerr.nextLine();
+    } else {
+      for (int i = 0; i < carrinho.size(); i++) {
+        ItemEstoque item = carrinho.get(i);
+        System.out.println((i + 1) + ". " + item.getNome());
       }
-      System.out.println(""); // Quebra de linha
+      System.out.println("");
+      System.out.println("0. Voltar ao menu principal");
+      System.out.println("Selecione o número do item para remover:");
+      int opcao = scanner.nextInt();
+      scanner.nextLine();
+      if (opcao >= 1 && opcao <= carrinho.size()) {
+        ItemEstoque itemRemovido = carrinho.remove(opcao - 1);
+        System.out.println(itemRemovido.getNome() + " removido do carrinho.");
+      } else if (opcao == 0) {
+        System.out.println("Nenhum item foi removido do carrinho.");
+      } else {
+        System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
+      }
+    }
+    System.out.println(""); // Quebra de linha
   }
 
   public static void exibirMenuPrincipal() {
@@ -204,58 +202,57 @@ public class Mercado {
   }
 
   public static void comprarItens(Scanner scanner, Estoque estoque, List<ItemEstoque> carrinho) {
-  int opcao;
-  do {
-    System.out.println("--- Comprar Itens ---");
-    estoque.exibirItensComPreco();
-    System.out.println("");
-    System.out.println("0. Voltar ao menu principal");
-    System.out.println("Selecione o número do item para adicionar ao carrinho:");
-    opcao = scanner.nextInt();
-    scanner.nextLine();
-    limparConsole();
-    if (opcao > 0 && opcao <= estoque.getItemCount()) {
-      ItemEstoque itemSelecionado = estoque.getItem(opcao);
-      if (itemSelecionado instanceof ProdutoVendavel) {
-        ProdutoVendavel produtoSelecionado = (ProdutoVendavel) itemSelecionado;
-        System.out.println("Digite a quantidade desejada:");
-        int quantidade = scanner.nextInt();
-        scanner.nextLine();
-        limparConsole();
-        if (quantidade > produtoSelecionado.getQuantidade()) {
-          System.out.println("Quantidade insuficiente em estoque.");
-        } else {
-          ProdutoVendavel produtoCarrinho = findProdutoInCarrinho(carrinho, produtoSelecionado.getNome());
-          if (produtoCarrinho == null) {
-            produtoCarrinho = new ProdutoVendavel(
-              produtoSelecionado.getNome(),
-              produtoSelecionado.getPreco(),
-              quantidade
-            );
-            carrinho.add(produtoCarrinho);
+    int opcao;
+    do {
+      System.out.println("--- Comprar Itens ---");
+      estoque.exibirItensComPreco();
+      System.out.println("");
+      System.out.println("0. Voltar ao menu principal");
+      System.out.println("Selecione o número do item para adicionar ao carrinho:");
+      opcao = scanner.nextInt();
+      scanner.nextLine();
+      limparConsole();
+      if (opcao > 0 && opcao <= estoque.getItemCount()) {
+        ItemEstoque itemSelecionado = estoque.getItem(opcao);
+        if (itemSelecionado instanceof ProdutoVendavel) {
+          ProdutoVendavel produtoSelecionado = (ProdutoVendavel) itemSelecionado;
+          System.out.println("Digite a quantidade desejada:");
+          int quantidade = scanner.nextInt();
+          scanner.nextLine();
+          limparConsole();
+          if (quantidade > produtoSelecionado.getQuantidade()) {
+            System.out.println("Quantidade insuficiente em estoque.");
           } else {
-            produtoCarrinho.setQuantidade(produtoCarrinho.getQuantidade() + quantidade);
+            ProdutoVendavel produtoCarrinho = findProdutoInCarrinho(carrinho, produtoSelecionado.getNome());
+            if (produtoCarrinho == null) {
+              produtoCarrinho = new ProdutoVendavel(
+                  produtoSelecionado.getNome(),
+                  produtoSelecionado.getPreco(),
+                  quantidade);
+              carrinho.add(produtoCarrinho);
+            } else {
+              produtoCarrinho.setQuantidade(produtoCarrinho.getQuantidade() + quantidade);
+            }
+            produtoSelecionado.vender(quantidade);
+            System.out.println(produtoCarrinho.getNome() + " adicionado ao carrinho.");
           }
-          produtoSelecionado.vender(quantidade);
-          System.out.println(produtoCarrinho.getNome() + " adicionado ao carrinho.");
+        } else {
+          System.out.println("Opção inválida. Por favor, selecione um item válido.");
         }
-      } else {
-        System.out.println("Opção inválida. Por favor, selecione um item válido.");
+      } else if (opcao != 0) {
+        System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
       }
-    } else if (opcao != 0) {
-      System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
-    }
-  } while (opcao != 0);
-}
-
-public static ProdutoVendavel findProdutoInCarrinho(List<ItemEstoque> carrinho, String nome) {
-  for (ItemEstoque item : carrinho) {
-    if (item instanceof ProdutoVendavel && item.getNome().equals(nome)) {
-      return (ProdutoVendavel) item;
-    }
+    } while (opcao != 0);
   }
-  return null;
-}
+
+  public static ProdutoVendavel findProdutoInCarrinho(List<ItemEstoque> carrinho, String nome) {
+    for (ItemEstoque item : carrinho) {
+      if (item instanceof ProdutoVendavel && item.getNome().equals(nome)) {
+        return (ProdutoVendavel) item;
+      }
+    }
+    return null;
+  }
 
   public static void exibirCarrinho(List<ItemEstoque> carrinho) {
     System.out.println("--- Carrinho ---");
@@ -290,7 +287,7 @@ public static ProdutoVendavel findProdutoInCarrinho(List<ItemEstoque> carrinho, 
     if (opcao == 2) {
       System.out.println("Obrigado pela compra! Tenha um ótimo dia!");
       System.out.println("Mercadinho Vermelhinho agradece!");
-      System.out.println("⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿"); 
+      System.out.println("⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿");
       System.out.println("⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣄⡈⠙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿");
       System.out.println("⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⢉⣀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣦⡈⠹⣿⣿⣿⣿⣿⣿⣿⣿");
       System.out.println("⣿⣿⣿⣿⣿⣿⡟⠁⣠⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⠘⣿⣿⣿⣿⣿⣿⣿");
@@ -327,10 +324,15 @@ public static ProdutoVendavel findProdutoInCarrinho(List<ItemEstoque> carrinho, 
   }
 
   public static void exibirSobre() {
+    List<String> informacoes = new ArrayList<>();
+    informacoes.add("Programa de Gerenciamento de Estoque do mercadinho Vermelhinho");
+    informacoes.add("Desenvolvido por: Allyson Gustavo");
+    informacoes.add("Trabalho sem fins lucrativos.");
+
     System.out.println("--- Sobre ---");
-    System.out.println("Programa de Gerenciamento de Estoque do mercadinho Vermelhinho");
-    System.out.println("Desenvolvido por: Allyson Gustavo");
-    System.out.println("Trabalho sem fins lucrativos.");
+    for (String informacao : informacoes) {
+      System.out.println(informacao);
+    }
     System.out.println("Pressione qualquer tecla para continuar...");
     Scanner scanner = new Scanner(System.in);
     scanner.nextLine();
