@@ -6,6 +6,8 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.NoSuchElementException;
+import java.util.InputMismatchException;
 
 abstract class ItemEstoque {
   private String nome;
@@ -70,10 +72,10 @@ class ProdutoVendavel extends Produto implements Vendavel {
 }
 
 class Estoque {
-  private List<ItemEstoque> itens;
+  private List < ItemEstoque > itens;
 
   public Estoque() {
-    itens = new ArrayList<>();
+    itens = new ArrayList < > ();
   }
 
   public void adicionarItem(ItemEstoque item) {
@@ -127,17 +129,18 @@ public class Mercado {
     Scanner scanner = new Scanner(System.in);
     int opcao;
     boolean encerrarPrograma = false;
-    List<ItemEstoque> carrinho = new ArrayList<>();
+    List < ItemEstoque > carrinho = new ArrayList < > ();
 
     while (!encerrarPrograma) {
       exibirMenuPrincipal();
-      opcao = scanner.nextInt();
-      scanner.nextLine();
+      try {
+        opcao = scanner.nextInt();
+        scanner.nextLine();
 
-      // Limpar o console
-      limparConsole();
+        // Limpar o console
+        limparConsole();
 
-      switch (opcao) {
+        switch (opcao) {
         case 1:
           estoque.exibirItens();
           break;
@@ -158,11 +161,16 @@ public class Mercado {
         default:
           System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
           break;
+        }
+      } catch (InputMismatchException e) {
+        scanner.nextLine(); // Descarta a entrada inválida
+      } catch (NoSuchElementException e) {
+        scanner.nextLine(); // Descarta a entrada inválida
       }
     }
   }
 
-  public static void removerItemCarrinho(Scanner scanner, List<ItemEstoque> carrinho) {
+  public static void removerItemCarrinho(Scanner scanner, List < ItemEstoque > carrinho) {
     System.out.println("--- Remover Item do Carrinho ---");
     if (carrinho.isEmpty()) {
       System.out.println("Pressione qualquer tecla para continuar...");
@@ -201,7 +209,7 @@ public class Mercado {
     System.out.println("Digite o número da opção desejada:");
   }
 
-  public static void comprarItens(Scanner scanner, Estoque estoque, List<ItemEstoque> carrinho) {
+  public static void comprarItens(Scanner scanner, Estoque estoque, List < ItemEstoque > carrinho) {
     int opcao;
     do {
       System.out.println("--- Comprar Itens ---");
@@ -226,9 +234,9 @@ public class Mercado {
             ProdutoVendavel produtoCarrinho = findProdutoInCarrinho(carrinho, produtoSelecionado.getNome());
             if (produtoCarrinho == null) {
               produtoCarrinho = new ProdutoVendavel(
-                  produtoSelecionado.getNome(),
-                  produtoSelecionado.getPreco(),
-                  quantidade);
+                produtoSelecionado.getNome(),
+                produtoSelecionado.getPreco(),
+                quantidade);
               carrinho.add(produtoCarrinho);
             } else {
               produtoCarrinho.setQuantidade(produtoCarrinho.getQuantidade() + quantidade);
@@ -245,8 +253,8 @@ public class Mercado {
     } while (opcao != 0);
   }
 
-  public static ProdutoVendavel findProdutoInCarrinho(List<ItemEstoque> carrinho, String nome) {
-    for (ItemEstoque item : carrinho) {
+  public static ProdutoVendavel findProdutoInCarrinho(List < ItemEstoque > carrinho, String nome) {
+    for (ItemEstoque item: carrinho) {
       if (item instanceof ProdutoVendavel && item.getNome().equals(nome)) {
         return (ProdutoVendavel) item;
       }
@@ -254,13 +262,13 @@ public class Mercado {
     return null;
   }
 
-  public static void exibirCarrinho(List<ItemEstoque> carrinho) {
+  public static void exibirCarrinho(List < ItemEstoque > carrinho) {
     System.out.println("--- Carrinho ---");
     if (carrinho.isEmpty()) {
       System.out.println("O carrinho está vazio.");
     } else {
       double total = 0;
-      for (ItemEstoque item : carrinho) {
+      for (ItemEstoque item: carrinho) {
         item.exibirDetalhes();
         if (item instanceof ProdutoVendavel) {
           ProdutoVendavel produto = (ProdutoVendavel) item;
@@ -324,13 +332,13 @@ public class Mercado {
   }
 
   public static void exibirSobre() {
-    List<String> informacoes = new ArrayList<>();
+    List < String > informacoes = new ArrayList < > ();
     informacoes.add("Programa de Gerenciamento de Estoque do mercadinho Vermelhinho");
     informacoes.add("Desenvolvido por: Allyson Gustavo");
     informacoes.add("Trabalho sem fins lucrativos.");
 
     System.out.println("--- Sobre ---");
-    for (String informacao : informacoes) {
+    for (String informacao: informacoes) {
       System.out.println(informacao);
     }
     System.out.println("Pressione qualquer tecla para continuar...");
