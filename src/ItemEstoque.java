@@ -15,5 +15,9 @@ abstract class ItemEstoque {
     return preco;
   }
 
+  public abstract int getQuantidade();
+  
+  
+
   public abstract void exibirDetalhes();
 }

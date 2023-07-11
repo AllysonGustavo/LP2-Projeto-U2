@@ -19,4 +19,7 @@ class Produto extends ItemEstoque {
     System.out.println("Preço: " + getPreco());
     System.out.println("Quantidade: " + getQuantidade());
   }
+    
+  
+
 }

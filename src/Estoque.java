@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.util.ArrayList;
 
 class Estoque {
@@ -6,22 +5,39 @@ class Estoque {
 
   public Estoque() {
     itens = new ArrayList<>();
+    // Adicionar os itens ao estoque
+    Produto extintor = new Produto("Extintor", 103, 2);
+    ProdutoVendavel arrozBrancoCamil = new ProdutoVendavel("Arroz Branco Camil", 5.99, 11);
+    ProdutoVendavel feijao = new ProdutoVendavel("Feijão", 3.99, 13);
+    ProdutoVendavel sabaoEmPo = new ProdutoVendavel("Sabão em pó", 9.99, 18);
+
+    adicionarItem(extintor);
+    adicionarItem(arrozBrancoCamil);
+    adicionarItem(feijao);
+    adicionarItem(sabaoEmPo);
   }
 
   public void adicionarItem(ItemEstoque item) {
     itens.add(item);
   }
 
-  public void exibirItens() {
+  public String getItensString() {
+    StringBuilder sb = new StringBuilder();
     for (int i = 0; i < itens.size(); i++) {
       ItemEstoque item = itens.get(i);
-      System.out.println((i + 1) + ". " + item.getNome() + " - Quantidade: " + ((Produto) item).getQuantidade());
+      sb.append((i + 1)).append(". ").append(item.getNome()).append(" - ");
+      if (item instanceof ProdutoVendavel) {
+        ProdutoVendavel produto = (ProdutoVendavel) item;
+        sb.append("Quantidade: ").append(produto.getQuantidade());
+      } else if (item instanceof Produto) {
+        Produto produto = (Produto) item;
+        sb.append("Quantidade: ").append(produto.getQuantidade());
+      } else {
+        sb.append("Quantidade: N/A");
+      }
+      sb.append("\n");
     }
-
-    System.out.println("Pressione qualquer tecla para continuar...");
-    Scanner scanner = new Scanner(System.in);
-    scanner.nextLine();
-    Mercado.limparConsole();
+    return sb.toString();
   }
 
   public ItemEstoque getItem(int indice) {
@@ -32,12 +48,18 @@ class Estoque {
     return itens.size();
   }
 
-  public void exibirItensComPreco() {
+  public String getItensComPrecoString() {
+    StringBuilder sb = new StringBuilder();
     for (int i = 0; i < itens.size(); i++) {
       ItemEstoque item = itens.get(i);
       if (item instanceof ProdutoVendavel) {
-        System.out.println(i + ". " + item.getNome() + " - Preço: " + item.getPreco());
+        sb.append(i + 1).append(". ").append(item.getNome()).append(" - R$").append(item.getPreco()).append("\n");
       }
     }
+    return sb.toString();
+  }
+
+  public String toString() {
+    return getItensString();
   }
 }

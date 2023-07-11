@@ -11,4 +11,29 @@ class ProdutoVendavel extends Produto implements Vendavel {
       System.out.println("Não há estoque suficiente para realizar a venda.");
     }
   }
+
+  public void aumentarQuantidade(int quantidade) {
+    setQuantidade(getQuantidade() + quantidade);
+  }
 }
+  
+    
+    
+  
+
+  
+    
+  
+
+  
+    
+      
+      
+    
+      
+    
+  
+
+  
+    
+  
