@@ -16,24 +16,3 @@ class ProdutoVendavel extends Produto implements Vendavel {
     setQuantidade(getQuantidade() + quantidade);
   }
 }
-  
-    
-    
-  
-
-  
-    
-  
-
-  
-    
-      
-      
-    
-      
-    
-  
-
-  
-    
-  

@@ -16,8 +16,6 @@ abstract class ItemEstoque {
   }
 
   public abstract int getQuantidade();
-  
-  
 
   public abstract void exibirDetalhes();
 }

@@ -244,19 +244,19 @@ public class MercadoGUI extends JFrame {
     JPanel panel = new JPanel(new BorderLayout());
 
     // Criar a tabela para exibir os itens da compra
-    String[] colunas = {"Nome do Produto", "Quantidade", "Preço"};
+    String[] colunas = { "Nome do Produto", "Quantidade", "Preço" };
     String[][] dados = new String[carrinho.size() + 1][3];
 
     double totalCompra = 0.0;
     int totalQuantidade = 0;
 
     for (int i = 0; i < carrinho.size(); i++) {
-        ProdutoVendavel produto = (ProdutoVendavel) carrinho.get(i);
-        dados[i][0] = produto.getNome();
-        dados[i][1] = Integer.toString(produto.getQuantidade());
-        dados[i][2] = "R$" + String.format("%.2f", produto.getPreco());
-        totalCompra += produto.getPreco() * produto.getQuantidade();
-        totalQuantidade += produto.getQuantidade();
+      ProdutoVendavel produto = (ProdutoVendavel) carrinho.get(i);
+      dados[i][0] = produto.getNome();
+      dados[i][1] = Integer.toString(produto.getQuantidade());
+      dados[i][2] = "R$" + String.format("%.2f", produto.getPreco());
+      totalCompra += produto.getPreco() * produto.getQuantidade();
+      totalQuantidade += produto.getQuantidade();
     }
 
     dados[carrinho.size()][0] = "Total";
@@ -279,29 +279,29 @@ public class MercadoGUI extends JFrame {
 
     // Adicionar ação ao botão OK
     okButton.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            dialog.dispose(); // Fechar a janela quando o botão OK for clicado
-        }
+      public void actionPerformed(ActionEvent e) {
+        dialog.dispose(); // Fechar a janela quando o botão OK for clicado
+      }
     });
 
     // Adicionar ação ao botão Finalizar Compra
     finalizarButton.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-            if (carrinho.isEmpty()) {
-                JOptionPane.showMessageDialog(dialog, "O carrinho está vazio. Adicione itens antes de finalizar a compra.");
-            } else {
-                // Realizar as ações necessárias para finalizar a compra
-                ImageIcon icon = new ImageIcon("photos/thanks.png");
-                Image image = icon.getImage();
-                Image resizedImage = image.getScaledInstance(610, 409, Image.SCALE_SMOOTH);
-                ImageIcon resizedIcon = new ImageIcon(resizedImage);
+      public void actionPerformed(ActionEvent e) {
+        if (carrinho.isEmpty()) {
+          JOptionPane.showMessageDialog(dialog, "O carrinho está vazio. Adicione itens antes de finalizar a compra.");
+        } else {
+          // Realizar as ações necessárias para finalizar a compra
+          ImageIcon icon = new ImageIcon("photos/thanks.png");
+          Image image = icon.getImage();
+          Image resizedImage = image.getScaledInstance(610, 409, Image.SCALE_SMOOTH);
+          ImageIcon resizedIcon = new ImageIcon(resizedImage);
 
-                JOptionPane.showMessageDialog(dialog, "Mercadinho vermelhinho agradece!", "Compra finalizada com sucesso!",
-                JOptionPane.INFORMATION_MESSAGE, resizedIcon);
-                carrinho.clear(); // Limpar o carrinho após a compra ser finalizada
-                dialog.dispose(); // Fechar a janela quando a compra for finalizada
-            }
+          JOptionPane.showMessageDialog(dialog, "Mercadinho vermelhinho agradece!", "Compra finalizada com sucesso!",
+              JOptionPane.INFORMATION_MESSAGE, resizedIcon);
+          carrinho.clear(); // Limpar o carrinho após a compra ser finalizada
+          dialog.dispose(); // Fechar a janela quando a compra for finalizada
         }
+      }
     });
 
     // Adicionar o painel de botões ao painel principal
@@ -313,7 +313,7 @@ public class MercadoGUI extends JFrame {
     dialog.setSize(400, 300); // Definir o tamanho da janela (largura x altura)
     dialog.setLocationRelativeTo(this);
     dialog.setVisible(true);
-}
+  }
 
   public void exibirSobre() {
     ArrayList<String> informacoes = new ArrayList<>();
