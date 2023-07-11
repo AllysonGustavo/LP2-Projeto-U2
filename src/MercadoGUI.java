@@ -241,7 +241,9 @@ public class MercadoGUI extends JFrame {
   public void encerrarCompra() {
     // Criar a janela personalizada
     JDialog dialog = new JDialog(this, "Encerrar Compra", true);
-    JPanel panel = new JPanel(new BorderLayout());
+    JPanel panel = new JPanel();
+    BoxLayout boxLayout = new BoxLayout(panel, BoxLayout.Y_AXIS);
+    panel.setLayout(boxLayout);
 
     // Criar a tabela para exibir os itens da compra
     String[] colunas = { "Nome do Produto", "Quantidade", "Preço" };
@@ -265,32 +267,33 @@ public class MercadoGUI extends JFrame {
 
     JTable tabela = new JTable(dados, colunas);
     JScrollPane tabelaScrollPane = new JScrollPane(tabela);
-    panel.add(tabelaScrollPane, BorderLayout.CENTER);
 
-    // Criar o painel para os botões OK e Finalizar Compra
+    JPanel tabelaPanel = new JPanel(new BorderLayout());
+    tabelaPanel.add(tabelaScrollPane, BorderLayout.CENTER);
+    panel.add(tabelaPanel);
+
     JPanel buttonPanel = new JPanel();
     buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-    // Adicionar botões de OK e Finalizar Compra
     JButton cancelButton = new JButton("Cancelar");
     JButton finalizarButton = new JButton("Finalizar Compra");
     buttonPanel.add(cancelButton);
     buttonPanel.add(finalizarButton);
 
-    // Adicionar ação ao botão OK
+    JPanel totalPanel = new JPanel();
+    totalPanel.add(new JLabel("Total: " + String.format("R$%.2f", totalCompra)));
+
     cancelButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        dialog.dispose(); // Fechar a janela quando o botão OK for clicado
+        dialog.dispose();
       }
     });
 
-    // Adicionar ação ao botão Finalizar Compra
     finalizarButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (carrinho.isEmpty()) {
           JOptionPane.showMessageDialog(dialog, "O carrinho está vazio. Adicione itens antes de finalizar a compra.");
         } else {
-          // Realizar as ações necessárias para finalizar a compra
           ImageIcon icon = new ImageIcon("photos/thanks.png");
           Image image = icon.getImage();
           Image resizedImage = image.getScaledInstance(610, 409, Image.SCALE_SMOOTH);
@@ -298,19 +301,18 @@ public class MercadoGUI extends JFrame {
 
           JOptionPane.showMessageDialog(dialog, "Mercadinho vermelhinho agradece!", "Compra finalizada com sucesso!",
               JOptionPane.INFORMATION_MESSAGE, resizedIcon);
-          carrinho.clear(); // Limpar o carrinho após a compra ser finalizada
-          dialog.dispose(); // Fechar a janela quando a compra for finalizada
+          carrinho.clear();
+          dialog.dispose();
         }
       }
     });
 
-    // Adicionar o painel de botões ao painel principal
-    panel.add(buttonPanel, BorderLayout.SOUTH);
+    panel.add(buttonPanel);
+    panel.add(totalPanel);
 
-    // Configurar o layout da janela
     dialog.getContentPane().setLayout(new BorderLayout());
     dialog.getContentPane().add(panel, BorderLayout.CENTER);
-    dialog.setSize(400, 300); // Definir o tamanho da janela (largura x altura)
+    dialog.setSize(400, 300);
     dialog.setLocationRelativeTo(this);
     dialog.setVisible(true);
   }
