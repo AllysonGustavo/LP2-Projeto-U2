@@ -1,3 +1,3 @@
-interface Vendavel {
+interface Vendivel {
   void vender(int quantidade);
 }

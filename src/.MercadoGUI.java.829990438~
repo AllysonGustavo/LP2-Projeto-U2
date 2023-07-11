@@ -272,13 +272,13 @@ public class MercadoGUI extends JFrame {
     buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
     // Adicionar botões de OK e Finalizar Compra
-    JButton cancelButton = new JButton("Cancelar");
+    JButton okButton = new JButton("OK");
     JButton finalizarButton = new JButton("Finalizar Compra");
-    buttonPanel.add(cancelButton);
+    buttonPanel.add(okButton);
     buttonPanel.add(finalizarButton);
 
     // Adicionar ação ao botão OK
-    cancelButton.addActionListener(new ActionListener() {
+    okButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         dialog.dispose(); // Fechar a janela quando o botão OK for clicado
       }

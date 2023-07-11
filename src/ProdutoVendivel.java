@@ -1,5 +1,5 @@
-class ProdutoVendavel extends Produto implements Vendavel {
-  public ProdutoVendavel(String nome, double preco, int quantidade) {
+class ProdutoVendivel extends Produto implements Vendivel {
+  public ProdutoVendivel(String nome, double preco, int quantidade) {
     super(nome, preco, quantidade);
   }
 
